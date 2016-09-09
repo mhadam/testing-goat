@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+PIDFile=/run/gunicorn/pid
+User=mhadam
+Group=mhadam
+WorkingDirectory=/home/mhadam/sites/SITENAME/source/
+ExecStart=/home/mhadam/.virtualenvs/VIRTUALENV_NAME/bin/gunicorn --pid /run/gunicorn/pid superlists.wsgi:application --log-file /home/mhadam/log/gunicorn.log
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
