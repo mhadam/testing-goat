@@ -7,6 +7,12 @@ from lists.forms import (
 )
 
 class ItemFormTest(TestCase):
+    
+    def test_form_save(self):
+        list_ = List.objects.create()
+        form = ExistingListItemForm(for_list=list_, data={'text': 'hi'})
+        new_item = form.save()
+        self.assertEqual(new_item, Item.objects.all()[0])
 
     def test_form_item_input_has_placeholder_and_css_classes(self):
         form = ItemForm()
